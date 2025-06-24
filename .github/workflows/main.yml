@@ -6,11 +6,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # Шаг выполняется НА ХОСТЕ (без контейнера)
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Запуск компиляции в контейнере
       - name: Compile LaTeX
         uses: docker://blang/latex:ctanfull
         with:
@@ -20,10 +18,8 @@ jobs:
             pdflatex -interaction=nonstopmode CV.tex
             "
 
-      # Переносим PDF и сохраняем артефакт
       - name: Prepare artifact
         run: |
-          mv CV/CV.pdf CV.pdf
           echo "PDF generated at $(pwd)/CV.pdf"
 
       - name: Upload PDF artifact
@@ -47,7 +43,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: CV.pdf  # Исправлено имя файла
+          path: CV.pdf 
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
